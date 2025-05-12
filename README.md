@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> This is a fork of [@fastify/otel](https://github.com/fastify/otel) with downgraded OpenTelemetry dependencies to v1 that is used in [@sentry/node](https://github.com/getsentry/sentry-javascript) until it supports OpenTelemetry v2.
+
 # @fastify/otel
 
 [![CI](https://github.com/fastify/otel/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fastify/otel/actions/workflows/ci.yml)
@@ -81,7 +84,7 @@ const fastifyOtelInstrumentation = new FastifyOtelInstrumentation({
 });
 
 // ... in your Fastify definition
-const Fastify = require('fastify');
+const Fastify = require("fastify");
 const app = await fastify();
 ```
 
@@ -99,21 +102,26 @@ For more information about OpenTelemetry, please refer to the [OpenTelemetry Jav
 The `FastifyOtelRequestContext` is a wrapper around the OpenTelemetry `Context` and `Tracer` APIs. It also provides a way to manage the context of a request and its associated spans as well as some utilities to extract and inject further traces from and to the trace carrier.
 
 #### `FastifyOtelRequestContext#context: Context`
+
 The OpenTelemetry context object.
 
 #### `FastifyOtelRequestContext#tracer: Tracer`
+
 The OpenTelemetry tracer object.
 
 #### `FastifyOtelRequestContext#span: Span`
+
 The OpenTelemetry span object.
 The span is created for each request and is automatically ended when the request is completed.
 
 #### `FastifyOtelRequestContext#inject: function`
+
 The OpenTelemetry inject function. It is used to inject the current context into a carrier object.
 
 The carrier object can be any object that can hold key-value pairs, such as an HTTP request or response headers.
 
 #### `FastifyOtelRequestContext#extract: function`
+
 The OpenTelemetry extract function. It is used to extract a parent context from a carrier object.
 
 The carrier object can be any object that can hold key-value pairs, such as an HTTP request or response headers.
@@ -121,20 +129,20 @@ The carrier object can be any object that can hold key-value pairs, such as an H
 The extracted context can be used as a parent span for a new span.
 
 ```js
-const { fastifyOtelInstrumentation } = require('./otel.js');
-const Fastify = require('fastify');
+const { fastifyOtelInstrumentation } = require("./otel.js");
+const Fastify = require("fastify");
 
 const app = fastify();
 await app.register(fastifyOtelInstrumentation.plugin());
 
-app.get('/', (req, reply) => {
+app.get("/", (req, reply) => {
   const { context, tracer, span, inject, extract } = req.opentelemetry();
 
   // Extract a parent span from the request headers
   const parentCxt = extract(req.headers);
 
   // Create a new span
-  const newSpan = tracer.startSpan('my-new-span', {
+  const newSpan = tracer.startSpan("my-new-span", {
     parent: parentCxt,
   });
   // Do some work
@@ -146,7 +154,7 @@ app.get('/', (req, reply) => {
 
   reply.headers(carrier);
 
-  return 'hello world';
+  return "hello world";
 });
 ```
 
@@ -177,14 +185,14 @@ If a function is provided, it will be called with the request options and should
 #### Example
 
 ```ts
-import { FastifyOtelInstrumentation } from '@fastify/otel';
+import { FastifyOtelInstrumentation } from "@fastify/otel";
 
 const fastifyOtelInstrumentation = new FastifyOtelInstrumentation({
-  serverName: 'my-server',
+  serverName: "my-server",
   registerOnInitialization: true,
   ignorePaths: (opts) => {
     // Ignore all paths that start with /ignore
-    return opts.url.startsWith('/ignore');
+    return opts.url.startsWith("/ignore");
   },
 });
 ```
