@@ -1,6 +1,9 @@
 > [!IMPORTANT]  
 > This is a fork of [@fastify/otel](https://github.com/fastify/otel) with downgraded OpenTelemetry dependencies to v1 that is used in [@sentry/node](https://github.com/getsentry/sentry-javascript) until it supports OpenTelemetry v2.
 
+> [!WARNING]
+> When making changes to this branch the `codeload.github.com` link inside the [`@sentry/node` package.json](https://github.com/getsentry/sentry-javascript/blob/develop/packages/node/package.json) has to be updated to reflect the latest commit.
+
 # @fastify/otel
 
 [![CI](https://github.com/fastify/otel/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fastify/otel/actions/workflows/ci.yml)
